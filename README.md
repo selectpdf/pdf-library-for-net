@@ -16,6 +16,10 @@
   <a href="https://selectpdf.com/html-to-pdf-converter-for-net/"><img src="https://img.shields.io/badge/website-selectpdf.com-f59e0b" alt="Website"></a>
 </p>
 
+<p align="center">
+  <strong>Latest release: v26.3</strong> ("2026 Vol 3") — accessible (tagged) PDF / PDF/UA-1 and PDF/A-3 support.
+</p>
+
 ---
 
 ## Overview
@@ -31,13 +35,24 @@ CSS3 and JavaScript with full fidelity, but the library also includes a complete
 model so you can build documents from scratch, merge and split files, fill forms, add security,
 stamp templates and more.
 
+## What's new in v26.3 ("2026 Vol 3")
+
+- ♿ **Accessible (tagged) PDF — PDF/UA-1.** Generate tagged, accessible PDFs from HTML or built
+  programmatically, with a full logical structure tree, reading order and alternate text. Output is
+  validated with [veraPDF](https://verapdf.org/).
+- 🗄️ **PDF/A-3** at conformance levels **b, u and a** for long-term archiving, alongside the existing
+  PDF/A and PDF/X support.
+
+> Accessible (tagged) PDF and PDF/A-3 output uses the **Chromium** or **Blink** rendering engine and is
+> a feature of the **commercial** library (not the free Community Edition).
+
 ## Editions
 
 SelectPdf ships as several NuGet product lines, all built from the same engine:
 
 | Edition | Package | What you get |
 |---|---|---|
-| **Select.Pdf** | [`Select.Pdf`](https://www.nuget.org/packages/Select.Pdf/) | Full commercial library — HTML→PDF, PDF creation, merge/split, security, forms, digital signatures, PDF→text/image, and more. |
+| **Select.Pdf** | [`Select.Pdf`](https://www.nuget.org/packages/Select.Pdf/) | Full commercial library — HTML→PDF, PDF creation, merge/split, security, forms, digital signatures, accessible (tagged) PDF / PDF/UA-1, PDF/A-3, PDF→text/image, and more. |
 | **Select.HtmlToPdf** *(Free Community Edition)* | [`Select.HtmlToPdf`](https://www.nuget.org/packages/Select.HtmlToPdf/) | Free HTML→PDF converter. Same rendering quality as the commercial edition, limited to 5 pages per document. |
 | **SelectPdf.Extras** | [`Select.Pdf.Extras`](https://www.nuget.org/packages/Select.Pdf.Extras/) | Optional add-on with a modern AcroForms manager and PDF compressor. |
 
@@ -51,6 +66,8 @@ SelectPdf ships as several NuGet product lines, all built from the same engine:
 - 🔀 **Merge & split**, stamp, resize and reorganize existing PDFs.
 - 🔒 **Security** — encryption, passwords and permissions.
 - 🖊️ **AcroForms** — create and fill PDF form fields; digital signatures.
+- ♿ **Accessible (tagged) PDF** — PDF/UA-1 with logical structure tree, reading order and alt text *(v26.3)*.
+- 🗄️ **Compliance** — PDF/A-3 (levels b, u, a) *(v26.3)*, PDF/A and PDF/X for archiving and graphics exchange.
 - 📐 Full control over page size, orientation, margins, scaling and CSS media type.
 - 🔐 Authentication, custom HTTP headers, cookies, POST data and proxy support for the converter.
 
@@ -62,9 +79,12 @@ The HTML→PDF converter can render with several engines, selectable per convers
 | Engine | Description |
 |---|---|
 | **WebKit** | Default engine, embedded — no extra files to deploy. |
+| **WebKit Restricted** | WebKit variant for restricted-permission / limited-trust hosting environments. |
 | **Blink** | Standalone Chromium driven over CDP (modern .NET targets). |
 | **Chromium** | Chromium Embedded Framework (CEF) backend for the latest rendering features. |
 
+> WebKit, WebKit Restricted and Chromium run on every supported framework (from .NET Framework 2.0 up).
+> The **Blink** engine requires .NET Framework 4.6.1 or later (.NET Core and .NET 5–10).
 > Blink and Chromium require an additional runtime NuGet package (see Installation below).
 
 ## Supported platforms
