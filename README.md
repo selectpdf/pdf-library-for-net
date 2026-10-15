@@ -74,8 +74,8 @@ engines. **One license covers both.**
   caption.
 - 🔎 **Text search in every script.** `PdfToText.Search` finds text in Cyrillic, Chinese, Japanese,
   Korean, Hindi, Thai, Arabic and Hebrew, and right-to-left terms typed in reading order.
-- 🔤 Arabic words are extracted whole, and extracted text no longer carries invisible bidi embedding
-  characters.
+- 🔤 Arabic letters the Chromium engine draws as shaped glyphs are extracted inside their words, so far
+  fewer words come out split, and extracted text no longer carries invisible bidi embedding characters.
 - 🔗 With the Chromium and Blink engines, very long anchor names (headings in Japanese, for example) are
   renamed so PDF/A accepts them, and links to anchors a page does not define no longer point anywhere.
 - 🌐 With the Chromium engine, a page that navigates while it is being printed converts instead of failing.
