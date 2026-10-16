@@ -245,6 +245,7 @@ image.Save("page.png");
 - 🏠 **Product page:** https://selectpdf.com/pdf-library-for-net/
 - ⬇️ **Downloads & free trial:** https://selectpdf.com/downloads/
 - 🐧 **SelectPdf.Universal (cross-platform):** https://selectpdf.com/pdf-library-cross-platform/ (documentation: https://selectpdf.com/pdf-library/)
+- 📝 **Further reading:** [SelectPdf in 2026: A Cross-Platform .NET PDF Library for Windows, Linux and macOS](https://medium.com/@florentin.badea/selectpdf-in-2026-a-cross-platform-net-pdf-library-for-windows-linux-and-macos-bdaa89e16702), what changed in 26.4 and 26.5, with code (Medium)
 
 ## Licensing
 
