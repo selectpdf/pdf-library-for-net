@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <strong>Latest release: v26.5</strong> — accessible PDF from real web pages, text search in every script, and SelectPdf.Universal 26.5 with a remote engine, tables of contents and token signing.
+  <strong>Latest release: v26.6</strong> — .NET 11 support, engine deployment in packages.config projects and many fixes, and SelectPdf.Universal 26.6 with Excel and PowerPoint to PDF, PDF to Word, Excel and PowerPoint, and PDF/A validation.
 </p>
 
 ---
@@ -41,20 +41,26 @@ stamp templates and more.
 This repository covers the **classic** SelectPdf library for Windows. Since version 26.4 the family also
 includes **[SelectPdf.Universal](https://selectpdf.com/pdf-library-cross-platform/)**, our flagship: the
 SelectPdf API you already know, running on **Windows (x64, x86), Linux (x64, ARM64) and macOS on Apple
-Silicon**, on .NET 8 and .NET 10, and in Docker with nothing to apt-get. 82% of the classic public API
+Silicon**, on .NET 8, .NET 10 and .NET 11, and in Docker with nothing to apt-get. 82% of the classic public API
 carries over unchanged apart from the namespace, which is `SelectPdf.Universal`; the migration topic in
 the documentation lists every change.
 
 SelectPdf.Universal is also where new features land first: Word to PDF, redaction, signature
-validation, PDF/A-4 and PDF/UA-2 since 26.4, and in **26.5**:
+validation, PDF/A-4 and PDF/UA-2 since 26.4; a remote engine container for Alpine Linux, one package per
+platform, tables of contents with page numbers, fillable fields from HTML forms, token and HSM signing and
+long-term validation since 26.5; and in **26.6**:
 
-- a **remote engine** container (`ghcr.io/selectpdf/engine`), so applications on Alpine Linux and other
-  musl-based systems convert too;
-- **one package per platform** (`SelectPdf.Universal.Windows`, `.Linux`, `.Linux.Arm64`, `.MacOS`);
-- **tables of contents with page numbers** and **HTML forms converted to fillable PDF fields**;
-- **signing with keys the library never sees**: certificate store, USB tokens, smart cards and HSMs
-  (PKCS#11), key services in one or two steps, and **long-term validation** (PAdES B-LT);
-- **PDF/A-1a, PDF/A-2a and PDF/A-2u**, and faster parallel conversions.
+- **Excel and PowerPoint to PDF** (`ExcelToPdf`, `PowerPointToPdf`): workbooks with their print areas and
+  page breaks, slides, notes pages and handouts, also as tagged PDF/UA and PDF/A, on Windows, Linux and macOS;
+- **PDF to Word, Excel and PowerPoint** (`PdfToWord`, `PdfToExcel`, `PdfToPowerPoint`): DOCX, RTF, ODT,
+  HTML and Markdown, tables as typed cells, a slide per page;
+- **validation and preflight**: `PdfValidator` reports every rule a document fails for PDF/A, PDF/UA and
+  PDF/X, and `PdfPreflight.Fix` fixes what it can;
+- **XFA forms** filled through `PdfFormManager`, running the form's own scripts;
+- **splitting** (`PdfSplitManager`), **image extraction**, words with their positions, page objects,
+  layers, alternate text for images in existing PDFs, **sanitizing** untrusted PDFs, and **Fast Web View**
+  (linearized) output;
+- **.NET 11** support.
 
 ```powershell
 dotnet add package SelectPdf.Universal.Linux              # the library and the Linux x64 engine
@@ -63,24 +69,26 @@ dotnet add package SelectPdf.Universal.Linux              # the library and the 
 The classic library continues to be maintained, with .NET Framework 2.0 support and all four rendering
 engines. **One license covers both.**
 
-## What's new in v26.5
+## What's new in v26.6
 
-- ♿ **Accessible PDF from real web pages.** Tagged (PDF/UA-1) and PDF/A-3a conversions of real-world
-  pages now pass validation: decorative paint is marked as an artifact, content is attached to the element
-  it belongs to, and grouping elements hold their content the way the standard requires. Checked with
-  [veraPDF](https://verapdf.org/) on GitHub, the W3C home page and Wikipedia in English, Chinese, Arabic,
-  Hebrew and Japanese, with the Chromium and Blink engines.
-- 🖼️ An HTML `<figure>` is tagged as the picture it holds, with the picture's alternate text and its
-  caption.
-- 🔎 **Text search in every script.** `PdfToText.Search` finds text in Cyrillic, Chinese, Japanese,
-  Korean, Hindi, Thai, Arabic and Hebrew, and right-to-left terms typed in reading order.
-- 🔤 Arabic letters the Chromium engine draws as shaped glyphs are extracted inside their words, so far
-  fewer words come out split, and extracted text no longer carries invisible bidi embedding characters.
-- 🔗 With the Chromium and Blink engines, very long anchor names (headings in Japanese, for example) are
-  renamed so PDF/A accepts them, and links to anchors a page does not define no longer point anywhere.
-- 🌐 With the Chromium engine, a page that navigates while it is being printed converts instead of failing.
+- 🟣 **.NET 11** support.
+- 📦 The Chromium and Blink engine packages deploy the engine in **packages.config** projects (Web Forms,
+  MVC 5, older desktop apps) on build and publish.
+- 🤖 An agent skill for AI coding assistants ships in the main NuGet packages.
+- 🔤 The Chromium engine waits for web fonts that are still loading.
+- 🌐 Chromium fixes: a sticky header is no longer drawn over content with smooth scrolling; right-to-left
+  pages are no longer shifted; an empty HTML string converts to an empty page; `window.print()` no longer
+  hangs; `EnableOfflineMode` also blocks network resources of local-file and HTML-string pages.
+- 🛠️ The engine-not-found error names the folders searched and how to fix it, and the engines work from
+  paths longer than 260 characters.
+- 🔒 Commercial library: encryption fixes (opens in every viewer, AES-256 with non-ASCII passwords,
+  document information and metadata kept), digital signature fixes (validators accept them, AES-256 PFX
+  files, clear time-stamp errors), PDF/A-3 file attachments, Append keeps page labels, protected PDFs keep
+  their security on save and the new `RemoveSecurity` property removes it, and `RemoveUnusedFontGlyphs`
+  shrinks fonts.
 
-v26.4 added **ZUGFeRD / Factur-X electronic invoices**, custom XMP metadata, Chromium 154 and much faster
+v26.5 made tagged (PDF/UA-1) and PDF/A-3a conversions of real-world pages pass validation and added text
+search in every script. v26.4 added **ZUGFeRD / Factur-X electronic invoices**, custom XMP metadata, Chromium 154 and much faster
 saving of large documents. v26.3 added **accessible (tagged) PDF / PDF/UA-1** and **PDF/A-3** (levels b, u
 and a).
 
@@ -97,7 +105,7 @@ SelectPdf ships as several NuGet product lines, all built from the same engine:
 | **Select.Pdf** | [`Select.Pdf`](https://www.nuget.org/packages/Select.Pdf/) | Full commercial library — HTML→PDF, PDF creation, merge/split, security, forms, digital signatures, accessible (tagged) PDF / PDF/UA-1, PDF/A-3, PDF→text/image, and more. |
 | **Select.HtmlToPdf** *(Free Community Edition)* | [`Select.HtmlToPdf`](https://www.nuget.org/packages/Select.HtmlToPdf/) | Free HTML→PDF converter. Same rendering quality as the commercial edition, limited to 5 pages per document. |
 | **SelectPdf.Extras** | [`Select.Pdf.Extras`](https://www.nuget.org/packages/Select.Pdf.Extras/) | Optional add-on with a modern AcroForms manager and PDF compressor. |
-| **SelectPdf.Universal** *(cross-platform)* | [`SelectPdf.Universal`](https://www.nuget.org/packages/SelectPdf.Universal/) | The cross-platform flagship for Windows, Linux and macOS on Apple Silicon (or anywhere through the remote engine), plus Word to PDF, redaction, signature validation, token and HSM signing, long-term validation, PDF/A-4 and PDF/UA-2. |
+| **SelectPdf.Universal** *(cross-platform)* | [`SelectPdf.Universal`](https://www.nuget.org/packages/SelectPdf.Universal/) | The cross-platform flagship for Windows, Linux and macOS on Apple Silicon (or anywhere through the remote engine), plus Word, Excel and PowerPoint to PDF, PDF to Word, Excel and PowerPoint, PDF/A, PDF/UA and PDF/X validation, XFA forms, redaction, signature validation, token and HSM signing, long-term validation, PDF/A-4 and PDF/UA-2. |
 | **SelectPdf.HtmlToPdf.Universal** *(Free Community Edition, cross-platform)* | [`SelectPdf.HtmlToPdf.Universal`](https://www.nuget.org/packages/SelectPdf.HtmlToPdf.Universal/) | Free cross-platform HTML→PDF converter, limited to 5 pages per document. |
 
 ## Features
@@ -136,12 +144,12 @@ The HTML→PDF converter can render with several engines, selectable per convers
 ## Supported platforms
 
 - **.NET Framework** 2.0, 4.0, 4.6.1, 4.7.2
-- **.NET Standard 2.0** / .NET Core / .NET 5+
+- **.NET Standard 2.0** / .NET Core / .NET 5 to .NET 11
 - **Windows** x86 and x64
 
 For **Linux** (x64, ARM64), **macOS on Apple Silicon** and **Docker**, use
-[SelectPdf.Universal](https://selectpdf.com/pdf-library-cross-platform/) (.NET 8 and .NET 10, plus
-.NET Standard 2.0).
+[SelectPdf.Universal](https://selectpdf.com/pdf-library-cross-platform/) (.NET 8, .NET 10 and .NET 11,
+plus .NET Standard 2.0).
 
 ## Installation
 
